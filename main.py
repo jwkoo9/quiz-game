@@ -96,6 +96,30 @@ class QuizGame:
             self.best_score = score
             print("🎉 새로운 최고 점수입니다!")
 
+    def add_quiz(self):
+        print()
+        print("📌 새로운 퀴즈를 추가합니다.")
+
+        question = input("문제를 입력하세요: ").strip()
+        choice1 = input("선택지 1: ").strip()
+        choice2 = input("선택지 2: ").strip()
+        choice3 = input("선택지 3: ").strip()
+        choice4 = input("선택지 4: ").strip()
+        answer_input = input("정답 번호 (1-4): ").strip()
+
+        if answer_input not in ["1", "2", "3", "4"]:
+            print("⚠️ 정답 번호는 1~4 사이의 숫자여야 합니다.")
+            return
+
+        new_quiz = Quiz(
+            question,
+            [choice1, choice2, choice3, choice4],
+            int(answer_input)
+        )
+
+        self.quizzes.append(new_quiz)
+        print("✅ 퀴즈가 추가되었습니다!")
+
     def run(self):
         while True:
             self.show_menu()
@@ -104,7 +128,7 @@ class QuizGame:
             if choice == "1":
                 self.play_quiz()
             elif choice == "2":
-                print("퀴즈 추가 기능은 아직 준비 중입니다.")
+                self.add_quiz()
             elif choice == "3":
                 print("퀴즈 목록 기능은 아직 준비 중입니다.")
             elif choice == "4":
