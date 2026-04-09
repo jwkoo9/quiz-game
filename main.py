@@ -61,13 +61,48 @@ class QuizGame:
         print("5. 종료")
         print("========================================")
 
+    def play_quiz(self):
+        if not self.quizzes:
+            print("등록된 퀴즈가 없습니다.")
+            return
+
+        print()
+        print(f"📝 퀴즈를 시작합니다! (총 {len(self.quizzes)}문제)")
+
+        score = 0
+
+        for index, quiz in enumerate(self.quizzes, start=1):
+            print("----------------------------------------")
+            print(f"[문제 {index}]")
+            quiz.display()
+
+            user_input = input("정답 입력 (1-4): ").strip()
+
+            if user_input in ["1", "2", "3", "4"]:
+                user_answer = int(user_input)
+
+                if quiz.is_correct(user_answer):
+                    print("✅ 정답입니다!")
+                    score += 1
+                else:
+                    print(f"❌ 오답입니다! 정답은 {quiz.answer}번입니다.")
+            else:
+                print("⚠️ 잘못된 입력입니다. 이 문제는 오답 처리됩니다.")
+
+        print("----------------------------------------")
+        print(f"🏆 결과: {len(self.quizzes)}문제 중 {score}문제 정답!")
+
+        if self.best_score is None or score > self.best_score:
+            self.best_score = score
+            print("🎉 새로운 최고 점수입니다!")
+
     def run(self):
         while True:
             self.show_menu()
-            choice = input("선택: ")
+            choice = input("선택: ").strip()
 
             if choice == "1":
-                print("퀴즈 풀기 기능은 아직 준비 중입니다.")
+                self.play_quiz()
             elif choice == "2":
                 print("퀴즈 추가 기능은 아직 준비 중입니다.")
             elif choice == "3":
